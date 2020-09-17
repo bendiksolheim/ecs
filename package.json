@@ -2,7 +2,8 @@
   "name": "ecs",
   "version": "1.0.0",
   "description": "Simple entity component system written in Typescript, specially written to work well with Pixi.js as renderer.",
-  "main": "webpack.config.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "webpack -p"
   },
