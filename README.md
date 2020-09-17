@@ -4,6 +4,8 @@ Simple entity component system written in Typescript, specially written to work 
 
 ## Usage
 
+See https://github.com/bendiksolheim/space-race for an example game using this library
+
 ```
 import { Component, Event, system, World, Key} from "ecs";
 ```
