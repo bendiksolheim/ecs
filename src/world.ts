@@ -1,7 +1,7 @@
 import Component from "./component";
 import Entity from "./entity";
-//import { Rect, rect } from "../primitives/rect";
-import { System } from "./system";
+import { LogicSystem } from "./logic-system";
+import { RenderSystem } from "./render-system";
 import Keyboard, { Key } from "./keyboard";
 
 type Filter = Array<new (...args: any) => Component>;
@@ -10,19 +10,22 @@ export default class World {
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
   mouse: { x: number; y: number };
-  systems: System[];
+  logicSystems: LogicSystem[];
+  renderSystems: RenderSystem[];
   entities: Map<Filter, Map<string, Entity>>;
   keyboard: Keyboard;
 
   constructor(
     canvas: HTMLCanvasElement,
     entities: Record<string, Entity>,
-    systems: System[]
+    logicSystems: LogicSystem[],
+    renderSystems: RenderSystem[]
   ) {
     this.canvas = canvas;
     this.context = canvas.getContext("2d")!;
     this.mouse = { x: -100, y: -100 };
-    this.systems = systems;
+    this.logicSystems = logicSystems;
+    this.renderSystems = renderSystems;
     this.entities = new Map();
     this.keyboard = new Keyboard();
 
@@ -50,14 +53,27 @@ export default class World {
   }*/
 
   tick() {
-    this.systems.forEach((system) => {
+    this.logicSystems.forEach((system) => {
       const entities = Array.from(this.entities.get(system.filter)!.values());
       return system.tick(entities, this);
+    });
+
+    this.renderSystems.forEach((system) => {
+      const entities = Array.from(this.entities.get(system.filter)!.values());
+      return system.tick(entities, 0, this);
     });
   }
 
   createEntityMapping(entities: Record<string, Entity>) {
-    this.systems.forEach((system) => {
+    this.logicSystems.forEach((system) => {
+      const entityMap = new Map();
+      filterEntities(entities, system.filter).forEach((entity) => {
+        entityMap.set(entity.id, entity);
+      });
+      this.entities.set(system.filter, entityMap);
+    });
+
+    this.renderSystems.forEach((system) => {
       const entityMap = new Map();
       filterEntities(entities, system.filter).forEach((entity) => {
         entityMap.set(entity.id, entity);
@@ -89,7 +105,9 @@ function filterEntities(
   entities: Record<string, Entity>,
   filter: Filter
 ): Entity[] {
-  return Object.values(entities).filter((entity: Entity) => matches(entity, filter));
+  return Object.values(entities).filter((entity: Entity) =>
+    matches(entity, filter)
+  );
 }
 
 function matches(entity: Entity, filter: Filter): boolean {

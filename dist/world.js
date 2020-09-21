@@ -1,10 +1,11 @@
 import Keyboard from "./keyboard";
 export default class World {
-    constructor(canvas, entities, systems) {
+    constructor(canvas, entities, logicSystems, renderSystems) {
         this.canvas = canvas;
         this.context = canvas.getContext("2d");
         this.mouse = { x: -100, y: -100 };
-        this.systems = systems;
+        this.logicSystems = logicSystems;
+        this.renderSystems = renderSystems;
         this.entities = new Map();
         this.keyboard = new Keyboard();
         this.createEntityMapping(entities);
@@ -27,13 +28,24 @@ export default class World {
       return rect(0, 0, this.canvas.width, this.canvas.height);
     }*/
     tick() {
-        this.systems.forEach((system) => {
+        this.logicSystems.forEach((system) => {
             const entities = Array.from(this.entities.get(system.filter).values());
             return system.tick(entities, this);
         });
+        this.renderSystems.forEach((system) => {
+            const entities = Array.from(this.entities.get(system.filter).values());
+            return system.tick(entities, 0, this);
+        });
     }
     createEntityMapping(entities) {
-        this.systems.forEach((system) => {
+        this.logicSystems.forEach((system) => {
+            const entityMap = new Map();
+            filterEntities(entities, system.filter).forEach((entity) => {
+                entityMap.set(entity.id, entity);
+            });
+            this.entities.set(system.filter, entityMap);
+        });
+        this.renderSystems.forEach((system) => {
             const entityMap = new Map();
             filterEntities(entities, system.filter).forEach((entity) => {
                 entityMap.set(entity.id, entity);

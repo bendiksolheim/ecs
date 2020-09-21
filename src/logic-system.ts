@@ -2,23 +2,23 @@ import Component from "./component";
 import Entity from "./entity";
 import World from "./world";
 
-export interface SystemInitializer {
+export interface LogicSystemInitializer {
   (
     filter: Array<new (...args: any) => Component>,
     tick: (entities: Entity[], world: World) => void
-  ): System;
+  ): LogicSystem;
 }
 
-const system: SystemInitializer = (filter, tick) => {
+const logicSystem: LogicSystemInitializer = (filter, tick) => {
   return {
     filter,
     tick,
   };
 };
 
-export type System = {
+export type LogicSystem = {
   filter: Array<new (...args: any) => Component>;
   tick: (entity: Entity[], world: World) => void;
 };
 
-export default system;
+export default logicSystem;

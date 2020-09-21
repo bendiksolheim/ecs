@@ -1,5 +1,6 @@
 import Entity from "./entity";
-import system from "./system";
+import renderSystem from "./render-system";
+import logicSystem from "./logic-system";
 import World from "./world";
 import { Key } from "./keyboard";
-export { Entity, system, World, Key };
+export { Entity, logicSystem, renderSystem, World, Key };
