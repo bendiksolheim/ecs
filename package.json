@@ -5,8 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "webpack -p",
-    "rollup": "rollup -c && tsc"
+    "build": "rollup -c && tsc"
   },
   "keywords": [],
   "author": "",
