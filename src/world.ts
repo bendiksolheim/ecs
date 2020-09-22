@@ -4,6 +4,19 @@ import { LogicSystem } from "./logic-system";
 import { RenderSystem } from "./render-system";
 import Keyboard, { Key } from "./keyboard";
 
+const defaultRenderConfig = {
+  fps: 60,
+};
+
+type RenderConfig = typeof defaultRenderConfig;
+
+type RenderState = {
+  fps: number;
+  previous: number;
+  frameDuration: number;
+  lag: number;
+};
+
 type Filter = Array<new (...args: any) => Component>;
 
 export default class World {
@@ -14,12 +27,14 @@ export default class World {
   renderSystems: RenderSystem[];
   entities: Map<Filter, Map<string, Entity>>;
   keyboard: Keyboard;
+  renderState: RenderState;
 
   constructor(
     canvas: HTMLCanvasElement,
     entities: Record<string, Entity>,
     logicSystems: LogicSystem[],
-    renderSystems: RenderSystem[]
+    renderSystems: RenderSystem[],
+    renderConfig: RenderConfig = defaultRenderConfig
   ) {
     this.canvas = canvas;
     this.context = canvas.getContext("2d")!;
@@ -28,6 +43,13 @@ export default class World {
     this.renderSystems = renderSystems;
     this.entities = new Map();
     this.keyboard = new Keyboard();
+
+    this.renderState = {
+      fps: renderConfig.fps,
+      previous: 0,
+      frameDuration: renderConfig.fps / 1000,
+      lag: 0,
+    };
 
     this.createEntityMapping(entities);
     this.createMouseListener();
@@ -48,20 +70,43 @@ export default class World {
     });
   }
 
-  /*boundingBox(): Rect {
-    return rect(0, 0, this.canvas.width, this.canvas.height);
-  }*/
+  start() {
+    this.tick();
+  }
 
-  tick() {
-    this.logicSystems.forEach((system) => {
-      const entities = Array.from(this.entities.get(system.filter)!.values());
-      return system.tick(entities, this);
-    });
+  tick(timestamp?: number) {
+    if (!timestamp) {
+      timestamp = 0;
+    }
+    // Calculate time since last frame
+    let elapsed = timestamp - this.renderState.previous;
+
+    // Handle case where time since last frame is unreasonably high
+    if (elapsed > 1000) {
+      elapsed = this.renderState.frameDuration;
+    }
+
+    // Add elapsed time to lag counter
+    this.renderState.lag += elapsed;
+
+    while (this.renderState.lag > this.renderState.frameDuration) {
+      this.logicSystems.forEach((system) => {
+        const entities = Array.from(this.entities.get(system.filter)!.values());
+        return system.tick(entities, this);
+      });
+
+      this.renderState.lag -= this.renderState.frameDuration;
+    }
+
+    const lagOffset = this.renderState.lag / this.renderState.frameDuration;
 
     this.renderSystems.forEach((system) => {
       const entities = Array.from(this.entities.get(system.filter)!.values());
-      return system.tick(entities, 0, this);
+      return system.tick(entities, lagOffset, this);
     });
+
+    this.renderState.previous = timestamp;
+    requestAnimationFrame(this.tick);
   }
 
   createEntityMapping(entities: Record<string, Entity>) {
