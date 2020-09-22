@@ -61,7 +61,7 @@ export default class World {
             return system.tick(entities, lagOffset, this);
         });
         this.renderState.previous = timestamp;
-        requestAnimationFrame(this.tick);
+        requestAnimationFrame(() => this.tick());
     }
     createEntityMapping(entities) {
         this.logicSystems.forEach((system) => {

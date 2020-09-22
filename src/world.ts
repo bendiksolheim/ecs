@@ -106,7 +106,7 @@ export default class World {
     });
 
     this.renderState.previous = timestamp;
-    requestAnimationFrame(this.tick);
+    requestAnimationFrame(() => this.tick());
   }
 
   createEntityMapping(entities: Record<string, Entity>) {
