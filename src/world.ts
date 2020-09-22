@@ -89,7 +89,7 @@ export default class World {
     // Add elapsed time to lag counter
     this.renderState.lag += elapsed;
 
-    while (this.renderState.lag > this.renderState.frameDuration) {
+    while (this.renderState.lag >= this.renderState.frameDuration) {
       this.logicSystems.forEach((system) => {
         const entities = Array.from(this.entities.get(system.filter)!.values());
         return system.tick(entities, this);
