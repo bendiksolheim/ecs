@@ -3,6 +3,7 @@ import Entity from "./entity";
 import { LogicSystem } from "./logic-system";
 import { RenderSystem } from "./render-system";
 import Keyboard, { Key } from "./keyboard";
+import { makeEntities } from "./make-entities";
 
 const defaultRenderConfig = {
   fps: 60,
@@ -33,7 +34,7 @@ export default class World {
 
   constructor(
     canvas: HTMLCanvasElement,
-    entities: Record<string, Entity>,
+    entities: Entity[],
     logicSystems: LogicSystem[],
     renderSystems: RenderSystem[],
     renderConfig: RenderConfig = defaultRenderConfig
@@ -54,7 +55,7 @@ export default class World {
     };
     this.debug = renderConfig.debug;
 
-    this.createEntityMapping(entities);
+    this.createEntityMapping(makeEntities(entities));
     this.createMouseListener();
     this.createKeyboardListener();
   }

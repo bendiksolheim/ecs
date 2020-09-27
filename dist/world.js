@@ -1,4 +1,5 @@
 import Keyboard from "./keyboard";
+import { makeEntities } from "./make-entities";
 const defaultRenderConfig = {
     fps: 60,
     debug: false,
@@ -19,7 +20,7 @@ export default class World {
             lag: 0,
         };
         this.debug = renderConfig.debug;
-        this.createEntityMapping(entities);
+        this.createEntityMapping(makeEntities(entities));
         this.createMouseListener();
         this.createKeyboardListener();
     }

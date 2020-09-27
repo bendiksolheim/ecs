@@ -28,7 +28,7 @@ export default class World {
     keyboard: Keyboard;
     renderState: RenderState;
     debug: Boolean;
-    constructor(canvas: HTMLCanvasElement, entities: Record<string, Entity>, logicSystems: LogicSystem[], renderSystems: RenderSystem[], renderConfig?: RenderConfig);
+    constructor(canvas: HTMLCanvasElement, entities: Entity[], logicSystems: LogicSystem[], renderSystems: RenderSystem[], renderConfig?: RenderConfig);
     add(entity: Entity): void;
     removeEntity(id: string): void;
     start(): void;
