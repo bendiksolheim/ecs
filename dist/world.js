@@ -1,6 +1,7 @@
 import Keyboard from "./keyboard";
 const defaultRenderConfig = {
     fps: 60,
+    debug: false,
 };
 export default class World {
     constructor(canvas, entities, logicSystems, renderSystems, renderConfig = defaultRenderConfig) {
@@ -17,6 +18,7 @@ export default class World {
             frameDuration: renderConfig.fps / 1000,
             lag: 0,
         };
+        this.debug = renderConfig.debug;
         this.createEntityMapping(entities);
         this.createMouseListener();
         this.createKeyboardListener();
@@ -34,6 +36,7 @@ export default class World {
         });
     }
     start() {
+        log(this.debug, "Starting rendering", this.renderState);
         this.tick();
     }
     tick(timestamp) {
@@ -42,26 +45,31 @@ export default class World {
         }
         // Calculate time since last frame
         let elapsed = timestamp - this.renderState.previous;
+        log(this.debug, "Elapsed", elapsed);
         // Handle case where time since last frame is unreasonably high
         if (elapsed > 1000) {
             elapsed = this.renderState.frameDuration;
         }
         // Add elapsed time to lag counter
         this.renderState.lag += elapsed;
-        while (this.renderState.lag > this.renderState.frameDuration) {
+        log(this.debug, "Frame", this.renderState);
+        let count = 0;
+        while (this.renderState.lag >= this.renderState.frameDuration) {
+            count += 1;
             this.logicSystems.forEach((system) => {
                 const entities = Array.from(this.entities.get(system.filter).values());
                 return system.tick(entities, this);
             });
             this.renderState.lag -= this.renderState.frameDuration;
         }
+        log(this.debug, "Update ran", count, "times");
         const lagOffset = this.renderState.lag / this.renderState.frameDuration;
         this.renderSystems.forEach((system) => {
             const entities = Array.from(this.entities.get(system.filter).values());
             return system.tick(entities, lagOffset, this);
         });
         this.renderState.previous = timestamp;
-        requestAnimationFrame(() => this.tick());
+        requestAnimationFrame((n) => this.tick(n));
     }
     createEntityMapping(entities) {
         this.logicSystems.forEach((system) => {
@@ -100,4 +108,20 @@ function filterEntities(entities, filter) {
 }
 function matches(entity, filter) {
     return filter.every((component) => entity.has(component));
+}
+function log(debug, ...msg) {
+    if (debug) {
+        const messages = msg.map((m) => {
+            if (typeof m === "object") {
+                return JSON.stringify(m);
+            }
+            else if (typeof m === "string") {
+                return m;
+            }
+            else {
+                return String(m);
+            }
+        });
+        console.log.apply(undefined, messages);
+    }
 }

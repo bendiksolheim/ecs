@@ -5,6 +5,7 @@ import { RenderSystem } from "./render-system";
 import Keyboard from "./keyboard";
 declare const defaultRenderConfig: {
     fps: number;
+    debug: boolean;
 };
 declare type RenderConfig = typeof defaultRenderConfig;
 declare type RenderState = {
@@ -26,6 +27,7 @@ export default class World {
     entities: Map<Filter, Map<string, Entity>>;
     keyboard: Keyboard;
     renderState: RenderState;
+    debug: Boolean;
     constructor(canvas: HTMLCanvasElement, entities: Record<string, Entity>, logicSystems: LogicSystem[], renderSystems: RenderSystem[], renderConfig?: RenderConfig);
     add(entity: Entity): void;
     removeEntity(id: string): void;

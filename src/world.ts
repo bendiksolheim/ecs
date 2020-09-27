@@ -6,6 +6,7 @@ import Keyboard, { Key } from "./keyboard";
 
 const defaultRenderConfig = {
   fps: 60,
+  debug: false,
 };
 
 type RenderConfig = typeof defaultRenderConfig;
@@ -28,6 +29,7 @@ export default class World {
   entities: Map<Filter, Map<string, Entity>>;
   keyboard: Keyboard;
   renderState: RenderState;
+  debug: Boolean;
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -50,6 +52,7 @@ export default class World {
       frameDuration: renderConfig.fps / 1000,
       lag: 0,
     };
+    this.debug = renderConfig.debug;
 
     this.createEntityMapping(entities);
     this.createMouseListener();
@@ -71,6 +74,7 @@ export default class World {
   }
 
   start() {
+    log(this.debug, "Starting rendering", this.renderState);
     this.tick();
   }
 
@@ -80,6 +84,7 @@ export default class World {
     }
     // Calculate time since last frame
     let elapsed = timestamp - this.renderState.previous;
+    log(this.debug, "Elapsed", elapsed);
 
     // Handle case where time since last frame is unreasonably high
     if (elapsed > 1000) {
@@ -89,7 +94,10 @@ export default class World {
     // Add elapsed time to lag counter
     this.renderState.lag += elapsed;
 
+    log(this.debug, "Frame", this.renderState);
+    let count = 0;
     while (this.renderState.lag >= this.renderState.frameDuration) {
+      count += 1;
       this.logicSystems.forEach((system) => {
         const entities = Array.from(this.entities.get(system.filter)!.values());
         return system.tick(entities, this);
@@ -97,6 +105,7 @@ export default class World {
 
       this.renderState.lag -= this.renderState.frameDuration;
     }
+    log(this.debug, "Update ran", count, "times");
 
     const lagOffset = this.renderState.lag / this.renderState.frameDuration;
 
@@ -106,7 +115,7 @@ export default class World {
     });
 
     this.renderState.previous = timestamp;
-    requestAnimationFrame(() => this.tick());
+    requestAnimationFrame((n) => this.tick(n));
   }
 
   createEntityMapping(entities: Record<string, Entity>) {
@@ -157,4 +166,19 @@ function filterEntities(
 
 function matches(entity: Entity, filter: Filter): boolean {
   return filter.every((component) => entity.has(component));
+}
+
+function log(debug: Boolean, ...msg: any[]) {
+  if (debug) {
+    const messages = msg.map((m) => {
+      if (typeof m === "object") {
+        return JSON.stringify(m);
+      } else if (typeof m === "string") {
+        return m;
+      } else {
+        return String(m);
+      }
+    });
+    console.log.apply(undefined, messages);
+  }
 }
