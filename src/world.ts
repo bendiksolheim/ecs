@@ -49,7 +49,7 @@ export default class World {
     this.renderState = {
       fps: renderConfig.fps,
       previous: 0,
-      frameDuration: renderConfig.fps / 1000,
+      frameDuration: 1000 / renderConfig.fps,
       lag: 0,
     };
     this.debug = renderConfig.debug;
