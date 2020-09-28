@@ -10,7 +10,7 @@ Simple entity component system written in Typescript, specially written to work 
 ## Usage
 
 ```
-import { Component, Event, logicSystem, renderSystem, World, Key} from "ecs";
+import { Component, Entity, logicSystem, renderSystem, World, Key, PixiEntity, Displayable, Position, Rotation, Size } from "ecs";
 ```
 
 ## Resources
