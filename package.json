@@ -1,15 +1,20 @@
 {
   "name": "ecs",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Simple entity component system written in Typescript, specially written to work well with Pixi.js as renderer.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rollup -c && tsc"
+    "clean": "rm -r dist",
+    "build": "rollup -c && tsc",
+    "preversion": "tsc",
+    "version": "npm run clean && npm run build && git add --all dist",
+    "postversion": "git push && git push --tags"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "private": true,
   "devDependencies": {
     "rollup": "^2.27.1",
     "rollup-plugin-terser": "^7.0.2",
