@@ -22,6 +22,15 @@ export default class Entity {
     return this.components.has(component);
   }
 
+  ifHas<C extends Component>(
+    component: new (...args: any) => C,
+    fn: (c: C) => void
+  ) {
+    if (this.has(component)) {
+      fn(this.get(component));
+    }
+  }
+
   get<C extends Component>(component: new (...args: any) => C): C {
     return this.components.get(component) as C;
   }

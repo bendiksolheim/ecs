@@ -13,6 +13,11 @@ export default class Entity {
     has(component) {
         return this.components.has(component);
     }
+    ifHas(component, fn) {
+        if (this.has(component)) {
+            fn(this.get(component));
+        }
+    }
     get(component) {
         return this.components.get(component);
     }
