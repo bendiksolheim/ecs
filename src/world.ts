@@ -205,7 +205,7 @@ function matches(entity: Entity, filter: Filter): boolean {
 
 function log(debug: Boolean, ...msg: any[]) {
   if (debug) {
-    const messages = msg.map((m) => {
+    const messages: any[] = msg.map((m) => {
       if (typeof m === "object") {
         return JSON.stringify(m);
       } else if (typeof m === "string") {
@@ -214,6 +214,6 @@ function log(debug: Boolean, ...msg: any[]) {
         return String(m);
       }
     });
-    console.log.apply(undefined, messages);
+    console.log.apply(undefined, [messages]);
   }
 }
