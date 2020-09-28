@@ -1,23 +1,57 @@
+/**
+ * Bundles together one or more components to create a game entity
+ * Usage:
+ *
+ * ```
+ * const entity = new Entity();
+ * entity.add(new Health(20));
+ * ```
+ */
 export default class Entity {
+    /**
+     */
     constructor() {
         this.id = randomId();
         this.components = new Map();
     }
+    /**
+     * Add a component to this entity.
+     */
     add(component) {
         const i = component.constructor;
         this.components.set(i, component);
     }
+    /**
+     * Remove a component from this entity.
+     */
     remove(component) {
         this.components.delete(component);
     }
+    /**
+     * @param component The constructor of a component
+     * @returns true | false depending on if this entity has the specified component
+     */
     has(component) {
         return this.components.has(component);
     }
+    /**
+     * Executes the provided function if this entity has the specified component
+     *
+     * @param component The constructor of a component
+     * @param fn A function to be executed if the entity has the component
+     */
     ifHas(component, fn) {
         if (this.has(component)) {
             fn(this.get(component));
         }
     }
+    /**
+     * Returns the component instance for the specified component. Useful if you
+     * need to modify values on the component
+     *
+     * @param component The constructor of a component
+     * @returns Returns the component instance
+     */
     get(component) {
         return this.components.get(component);
     }

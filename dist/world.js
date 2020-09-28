@@ -4,7 +4,26 @@ const defaultRenderConfig = {
     fps: 60,
     debug: false,
 };
+/**
+ * A World ties everything together
+ * Usage:
+ *
+ * ```
+ * const pixi = new PIXI.Application({ width: 600, height: 400});
+ * const entityList = [list(), full(), of(), entities()]
+ * const settings = {
+ *     fps: 60,
+ *     debug: false
+ * }
+ * const world = new World(pixi.view, entityList, [myUpdateSystem], [myRenderSystem], settings);
+ * world.start()
+ * ```
+ *
+ */
 export default class World {
+    /**
+     * Main constructor
+     */
     constructor(canvas, entities, logicSystems, renderSystems, renderConfig = defaultRenderConfig) {
         this.canvas = canvas;
         this.context = canvas.getContext("2d");
@@ -24,6 +43,9 @@ export default class World {
         this.createMouseListener();
         this.createKeyboardListener();
     }
+    /**
+     * Adds an entity to an already instantiated world. Updates system filters.
+     */
     add(entity) {
         this.entities.forEach((entities, filter) => {
             if (matches(entity, filter)) {
@@ -31,11 +53,17 @@ export default class World {
             }
         });
     }
+    /**
+     * Removes an entity from an already instantiated world.
+     */
     removeEntity(id) {
         this.entities.forEach((value) => {
             value.delete(id);
         });
     }
+    /**
+     * Starts the game loop. Runs until stopped.
+     */
     start() {
         log(this.debug, "Starting rendering", this.renderState);
         this.tick();
