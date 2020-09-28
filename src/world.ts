@@ -21,17 +21,42 @@ type RenderState = {
 
 type Filter = Array<new (...args: any) => Component>;
 
+/**
+ * A World ties everything together
+ * Usage:
+ *
+ * ```
+ * const pixi = new PIXI.Application({ width: 600, height: 400});
+ * const entityList = [list(), full(), of(), entities()]
+ * const settings = {
+ *     fps: 60,
+ *     debug: false
+ * }
+ * const world = new World(pixi.view, entityList, [myUpdateSystem], [myRenderSystem], settings);
+ * world.start()
+ * ```
+ *
+ */
 export default class World {
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
-  mouse: { x: number; y: number };
   logicSystems: LogicSystem[];
   renderSystems: RenderSystem[];
   entities: Map<Filter, Map<string, Entity>>;
-  keyboard: Keyboard;
   renderState: RenderState;
   debug: Boolean;
+  /**
+   * Contains the current mouse position
+   */
+  mouse: { x: number; y: number };
+  /**
+   * Contains current keyboard state, with keys pressed and so on
+   */
+  keyboard: Keyboard;
 
+  /**
+   * Main constructor
+   */
   constructor(
     canvas: HTMLCanvasElement,
     entities: Entity[],
@@ -60,6 +85,9 @@ export default class World {
     this.createKeyboardListener();
   }
 
+  /**
+   * Adds an entity to an already instantiated world. Updates system filters.
+   */
   add(entity: Entity) {
     this.entities.forEach((entities, filter) => {
       if (matches(entity, filter)) {
@@ -68,12 +96,18 @@ export default class World {
     });
   }
 
+  /**
+   * Removes an entity from an already instantiated world.
+   */
   removeEntity(id: string) {
     this.entities.forEach((value) => {
       value.delete(id);
     });
   }
 
+  /**
+   * Starts the game loop. Runs until stopped.
+   */
   start() {
     log(this.debug, "Starting rendering", this.renderState);
     this.tick();
