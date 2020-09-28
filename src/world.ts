@@ -214,6 +214,6 @@ function log(debug: Boolean, ...msg: any[]) {
         return String(m);
       }
     });
-    console.log.apply(undefined, [messages]);
+    console.log.call(null, messages);
   }
 }
