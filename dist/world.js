@@ -151,6 +151,6 @@ function log(debug, ...msg) {
                 return String(m);
             }
         });
-        console.log.apply(undefined, messages);
+        console.log.apply(undefined, [messages]);
     }
 }
