@@ -79,6 +79,10 @@ export default class Entity {
     return this.components.get(component) as C;
   }
 
+  register(world: World) {
+    this.world = world;
+  }
+
   print() {
     const components = [...this.components];
     console.log(JSON.stringify({ id: this.id, components }, null, 4));

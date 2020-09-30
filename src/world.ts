@@ -80,6 +80,10 @@ export default class World {
     };
     this.debug = renderConfig.debug;
 
+    entities.forEach((entity) => {
+      entity.register(this);
+    });
+
     this.createEntityMapping(makeEntities(entities));
     this.createMouseListener();
     this.createKeyboardListener();
@@ -89,6 +93,7 @@ export default class World {
    * Adds an entity to an already instantiated world. Updates system filters.
    */
   addEntity(entity: Entity) {
+    entity.register(this);
     this.entities.forEach((entities, filter) => {
       if (matches(entity, filter)) {
         entities.set(entity.id, entity);
