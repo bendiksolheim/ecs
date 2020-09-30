@@ -1,4 +1,5 @@
 import Component from "./component";
+import World from "./world";
 
 /**
  * Bundles together one or more components to create a game entity
@@ -12,6 +13,7 @@ import Component from "./component";
 export default class Entity {
   id: string;
   components: Map<new () => Component, Component>;
+  world?: World;
 
   /**
    */
@@ -26,6 +28,10 @@ export default class Entity {
   add(component: Component) {
     const i = component.constructor as new (...args: any) => Component;
     this.components.set(i, component);
+    if (this.world) {
+      this.world.removeEntity(this.id);
+      this.world.addEntity(this);
+    }
   }
 
   /**
@@ -33,6 +39,10 @@ export default class Entity {
    */
   remove(component: new (...args: any) => Component) {
     this.components.delete(component);
+    if (this.world) {
+      this.world.removeEntity(this.id);
+      this.world.addEntity(this);
+    }
   }
 
   /**
