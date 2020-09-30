@@ -88,7 +88,7 @@ export default class World {
   /**
    * Adds an entity to an already instantiated world. Updates system filters.
    */
-  add(entity: Entity) {
+  addEntity(entity: Entity) {
     this.entities.forEach((entities, filter) => {
       if (matches(entity, filter)) {
         entities.set(entity.id, entity);
