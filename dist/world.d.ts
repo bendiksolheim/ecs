@@ -57,7 +57,7 @@ export default class World {
     /**
      * Adds an entity to an already instantiated world. Updates system filters.
      */
-    add(entity: Entity): void;
+    addEntity(entity: Entity): void;
     /**
      * Removes an entity from an already instantiated world.
      */

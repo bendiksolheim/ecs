@@ -20,12 +20,20 @@ export default class Entity {
     add(component) {
         const i = component.constructor;
         this.components.set(i, component);
+        if (this.world) {
+            this.world.removeEntity(this.id);
+            this.world.addEntity(this);
+        }
     }
     /**
      * Remove a component from this entity.
      */
     remove(component) {
         this.components.delete(component);
+        if (this.world) {
+            this.world.removeEntity(this.id);
+            this.world.addEntity(this);
+        }
     }
     /**
      * @param component The constructor of a component

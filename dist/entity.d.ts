@@ -1,4 +1,5 @@
 import Component from "./component";
+import World from "./world";
 /**
  * Bundles together one or more components to create a game entity
  * Usage:
@@ -11,6 +12,7 @@ import Component from "./component";
 export default class Entity {
     id: string;
     components: Map<new () => Component, Component>;
+    world?: World;
     /**
      */
     constructor();
