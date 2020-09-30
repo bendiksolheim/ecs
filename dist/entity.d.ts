@@ -44,5 +44,6 @@ export default class Entity {
      * @returns Returns the component instance
      */
     get<C extends Component>(component: new (...args: any) => C): C;
+    register(world: World): void;
     print(): void;
 }
