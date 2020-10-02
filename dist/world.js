@@ -27,7 +27,7 @@ export default class World {
     constructor(canvas, entities, logicSystems, renderSystems, renderConfig = defaultRenderConfig) {
         this.canvas = canvas;
         this.context = canvas.getContext("2d");
-        this.mouse = { x: -100, y: -100 };
+        this.mouse = { x: -100, y: -100, pressed: false };
         this.logicSystems = logicSystems;
         this.renderSystems = renderSystems;
         this.entities = new Map();
@@ -125,6 +125,12 @@ export default class World {
         this.canvas.addEventListener("mousemove", (ev) => {
             this.mouse.x = ev.clientX - canvasRect.left;
             this.mouse.y = ev.clientY - canvasRect.top;
+        });
+        this.canvas.addEventListener("mousedown", () => {
+            this.mouse.pressed = true;
+        });
+        this.canvas.addEventListener("mouseup", () => {
+            this.mouse.pressed = false;
         });
     }
     createKeyboardListener() {

@@ -45,6 +45,7 @@ export default class World {
     mouse: {
         x: number;
         y: number;
+        pressed: boolean;
     };
     /**
      * Contains current keyboard state, with keys pressed and so on
