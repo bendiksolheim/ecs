@@ -117,18 +117,24 @@ export default class World {
         requestAnimationFrame((n) => this.tick(n));
     }
     createEntityMapping(entities) {
+        log(this.debug, "Mapping logic systems");
         this.logicSystems.forEach((system) => {
-            const entityMap = new Map();
+            log(this.debug, "Creating mapping for system");
             Object.entries(system.filter).forEach(([key, filter]) => {
+                log(this.debug, `Mapping for ${key}`);
+                const entityMap = new Map();
                 filterEntities(entities, filter).forEach((entity) => {
                     entityMap.set(entity.id, entity);
                 });
                 this.entities.set(filter, entityMap);
             });
         });
+        log(this.debug, "Mapping render systems");
         this.renderSystems.forEach((system) => {
-            const entityMap = new Map();
+            log(this.debug, "Creating mapping for system");
             Object.entries(system.filter).forEach(([key, filter]) => {
+                log(this.debug, `Mapping for ${key}`);
+                const entityMap = new Map();
                 filterEntities(entities, filter).forEach((entity) => {
                     entityMap.set(entity.id, entity);
                 });
