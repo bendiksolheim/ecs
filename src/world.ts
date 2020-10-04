@@ -139,7 +139,13 @@ export default class World {
     while (this.renderState.lag >= this.renderState.frameDuration) {
       count += 1;
       this.logicSystems.forEach((system) => {
-        const entities = Array.from(this.entities.get(system.filter)!.values());
+        const entities = Object.entries(system.filter).reduce((acc, cur) => {
+          const key = cur[0];
+          const filters = cur[1];
+          const entities = Array.from(this.entities.get(filters)!.values());
+          acc[key] = entities;
+          return acc;
+        }, {} as Record<string, Entity[]>);
         return system.tick(entities, this);
       });
 
@@ -150,7 +156,13 @@ export default class World {
     const lagOffset = this.renderState.lag / this.renderState.frameDuration;
 
     this.renderSystems.forEach((system) => {
-      const entities = Array.from(this.entities.get(system.filter)!.values());
+      const entities = Object.entries(system.filter).reduce((acc, cur) => {
+        const key = cur[0];
+        const filters = cur[1];
+        const entities = Array.from(this.entities.get(filters)!.values());
+        acc[key] = entities;
+        return acc;
+      }, {} as Record<string, Entity[]>);
       return system.tick(entities, lagOffset, this);
     });
 
@@ -161,18 +173,22 @@ export default class World {
   createEntityMapping(entities: Record<string, Entity>) {
     this.logicSystems.forEach((system) => {
       const entityMap = new Map();
-      filterEntities(entities, system.filter).forEach((entity) => {
-        entityMap.set(entity.id, entity);
+      Object.entries(system.filter).forEach(([key, filter]) => {
+        filterEntities(entities, filter).forEach((entity) => {
+          entityMap.set(entity.id, entity);
+        });
+        this.entities.set(filter, entityMap);
       });
-      this.entities.set(system.filter, entityMap);
     });
 
     this.renderSystems.forEach((system) => {
       const entityMap = new Map();
-      filterEntities(entities, system.filter).forEach((entity) => {
-        entityMap.set(entity.id, entity);
+      Object.entries(system.filter).forEach(([key, filter]) => {
+        filterEntities(entities, filter).forEach((entity) => {
+          entityMap.set(entity.id, entity);
+        });
+        this.entities.set(filter, entityMap);
       });
-      this.entities.set(system.filter, entityMap);
     });
   }
 

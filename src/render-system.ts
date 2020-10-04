@@ -6,13 +6,7 @@ import World from "./world";
  * A Filter is the constructor of a Component
  */
 type Filter = new (...args: any) => Component;
-
-export interface RenderSystemInitializer {
-  (
-    filter: Array<Filter>,
-    tick: (entities: Entity[], lag: number, world: World) => void
-  ): RenderSystem;
-}
+type Filters = Record<string, Array<Filter>>;
 
 /**
  * Initializer for a render system. A render system performs some kind of rendering
@@ -26,25 +20,32 @@ export interface RenderSystemInitializer {
  * a frame.
  * ```
  * const renderSystem = renderSystem(
- *     [Renderable],
- *     (entities: Entity[], lag: number, world: World) {
- *         entities.forEach(entity => {
+ *     { renderable: [Renderable] },
+ *     (entities: Record<string, Entity[]>, lag: number, world: World) {
+ *         entities.renderable.forEach(entity => {
  *             console.log(entity.has(Renderable)); // -> true
  *         })
  *     }
  * )
  * ```
  */
-const renderSystem: RenderSystemInitializer = (filter, tick) => {
+function renderSystem(
+  filter: Filters,
+  tick: (
+    entities: Record<keyof typeof filter, Entity[]>,
+    lag: number,
+    world: World
+  ) => void
+): RenderSystem {
   return {
     filter,
     tick,
   };
-};
+}
 
 export type RenderSystem = {
-  filter: Array<new (...args: any) => Component>;
-  tick: (entity: Entity[], lag: number, world: World) => void;
+  filter: Filters;
+  tick: (entity: Record<string, Entity[]>, lag: number, world: World) => void;
 };
 
 export default renderSystem;
