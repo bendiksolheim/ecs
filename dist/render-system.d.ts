@@ -5,9 +5,7 @@ import World from "./world";
  * A Filter is the constructor of a Component
  */
 declare type Filter = new (...args: any) => Component;
-export interface RenderSystemInitializer {
-    (filter: Array<Filter>, tick: (entities: Entity[], lag: number, world: World) => void): RenderSystem;
-}
+declare type Filters = Record<string, Array<Filter>>;
 /**
  * Initializer for a render system. A render system performs some kind of rendering
  * in your game. Where a logic system may be run N times per game frame, a render
@@ -20,18 +18,18 @@ export interface RenderSystemInitializer {
  * a frame.
  * ```
  * const renderSystem = renderSystem(
- *     [Renderable],
- *     (entities: Entity[], lag: number, world: World) {
- *         entities.forEach(entity => {
+ *     { renderable: [Renderable] },
+ *     (entities: Record<string, Entity[]>, lag: number, world: World) {
+ *         entities.renderable.forEach(entity => {
  *             console.log(entity.has(Renderable)); // -> true
  *         })
  *     }
  * )
  * ```
  */
-declare const renderSystem: RenderSystemInitializer;
+declare function renderSystem(filter: Filters, tick: (entities: Record<keyof typeof filter, Entity[]>, lag: number, world: World) => void): RenderSystem;
 export declare type RenderSystem = {
-    filter: Array<new (...args: any) => Component>;
-    tick: (entity: Entity[], lag: number, world: World) => void;
+    filter: Filters;
+    tick: (entity: Record<string, Entity[]>, lag: number, world: World) => void;
 };
 export default renderSystem;

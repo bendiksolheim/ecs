@@ -5,9 +5,7 @@ import World from "./world";
  * A Filter is the constructor of a Component
  */
 declare type Filter = new (...args: any) => Component;
-export interface LogicSystemInitializer {
-    (filter: Array<Filter>, tick: (entities: Entity[], world: World) => void): LogicSystem;
-}
+declare type Filters = Record<string, Array<Filter>>;
 /**
  * Initializer for a logic system. A logic system performs some kind of game logic
  * in your game, e.g. checks for collission. A logic system is executed N times per frame
@@ -17,9 +15,9 @@ export interface LogicSystemInitializer {
  *
  * ```
  * const logicSystem = logicystem(
- *     [ComponentOne, ComponentTwo],
- *     (entities: Entity[], world: World) => {
- *         entities.forEach(entity => {
+ *     { myEntities: [ComponentOne, ComponentTwo] },
+ *     (entities: Record<string, Entity[]>, world: World) => {
+ *         entities.myEntities.forEach(entity => {
  *             console.log(entity.has(ComponentOne)); // -> true
  *             console.log(entity.has(ComponentTwo)); // -> true
  *         });
@@ -27,9 +25,9 @@ export interface LogicSystemInitializer {
  * );
  * ```
  */
-declare const logicSystem: LogicSystemInitializer;
+declare function logicSystem(filter: Filters, tick: (entities: Record<keyof typeof filter, Entity[]>, world: World) => void): LogicSystem;
 export declare type LogicSystem = {
-    filter: Array<new (...args: any) => Component>;
-    tick: (entity: Entity[], world: World) => void;
+    filter: Filters;
+    tick: (entities: Record<string, Entity[]>, world: World) => void;
 };
 export default logicSystem;

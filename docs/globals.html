@@ -116,8 +116,8 @@
 					<div class="tsd-signature tsd-kind-icon">Filter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/d92b76b/src/logic-system.ts#L8">logic-system.ts:8</a></li>
-							<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/d92b76b/src/render-system.ts#L8">render-system.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/7c31fde/src/logic-system.ts#L8">logic-system.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/7c31fde/src/render-system.ts#L8">render-system.ts:8</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -137,15 +137,15 @@
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="logicsystem" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> logic<wbr>System</h3>
+					<h3>logic<wbr>System</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">logic<wbr>System<span class="tsd-signature-symbol">(</span>filter<span class="tsd-signature-symbol">: </span><a href="globals.html#filter" class="tsd-signature-type">Filter</a><span class="tsd-signature-symbol">[]</span>, tick<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>entities<span class="tsd-signature-symbol">: </span><a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span>, world<span class="tsd-signature-symbol">: </span><a href="classes/world.html" class="tsd-signature-type">World</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>filter<span class="tsd-signature-symbol">: </span><a href="globals.html#filter" class="tsd-signature-type">Filter</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>tick<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>entities<span class="tsd-signature-symbol">: </span><a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span>, world<span class="tsd-signature-symbol">: </span><a href="classes/world.html" class="tsd-signature-type">World</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> }</span></li>
+						<li class="tsd-signature tsd-kind-icon">logic<wbr>System<span class="tsd-signature-symbol">(</span>filter<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Filters</span>, tick<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>entities<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">filter</span><span class="tsd-signature-symbol">, </span><a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span>, world<span class="tsd-signature-symbol">: </span><a href="classes/world.html" class="tsd-signature-type">World</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">LogicSystem</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/d92b76b/src/logic-system.ts#L36">logic-system.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/7c31fde/src/logic-system.ts#L30">logic-system.ts:30</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -157,9 +157,9 @@
 									Usage:</p>
 								</div>
 								<pre><code>const logicSystem = logicystem(
-    [ComponentOne, ComponentTwo],
-    (<span class="hljs-name">entities</span>: Entity[], world: World) =&gt; {
-        entities.forEach(<span class="hljs-name">entity</span> =&gt; {
+    { myEntities: [ComponentOne, ComponentTwo] },
+    (<span class="hljs-name">entities</span>: Record&lt;string, Entity[]&gt;, world: World) =&gt; {
+        entities.myEntities.forEach(<span class="hljs-name">entity</span> =&gt; {
             console.log(<span class="hljs-name">entity</span>.has(<span class="hljs-name">ComponentOne</span>))<span class="hljs-comment">; // -&gt; true</span>
             console.log(<span class="hljs-name">entity</span>.has(<span class="hljs-name">ComponentTwo</span>))<span class="hljs-comment">; // -&gt; true</span>
         })<span class="hljs-comment">;</span>
@@ -169,21 +169,21 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>filter: <a href="globals.html#filter" class="tsd-signature-type">Filter</a><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>filter: <span class="tsd-signature-type">Filters</span></h5>
 								</li>
 								<li>
-									<h5>tick: <span class="tsd-signature-symbol">(</span>entities<span class="tsd-signature-symbol">: </span><a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span>, world<span class="tsd-signature-symbol">: </span><a href="classes/world.html" class="tsd-signature-type">World</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
+									<h5>tick: <span class="tsd-signature-symbol">(</span>entities<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">filter</span><span class="tsd-signature-symbol">, </span><a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span>, world<span class="tsd-signature-symbol">: </span><a href="classes/world.html" class="tsd-signature-type">World</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>entities<span class="tsd-signature-symbol">: </span><a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span>, world<span class="tsd-signature-symbol">: </span><a href="classes/world.html" class="tsd-signature-type">World</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>entities<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">filter</span><span class="tsd-signature-symbol">, </span><a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span>, world<span class="tsd-signature-symbol">: </span><a href="classes/world.html" class="tsd-signature-type">World</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
 													<h4 class="tsd-parameters-title">Parameters</h4>
 													<ul class="tsd-parameters">
 														<li>
-															<h5>entities: <a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span></h5>
+															<h5>entities: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">filter</span><span class="tsd-signature-symbol">, </span><a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h5>
 														</li>
 														<li>
 															<h5>world: <a href="classes/world.html" class="tsd-signature-type">World</a></h5>
@@ -196,50 +196,21 @@
 									</ul>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>filter<span class="tsd-signature-symbol">: </span><a href="globals.html#filter" class="tsd-signature-type">Filter</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>tick<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>entities<span class="tsd-signature-symbol">: </span><a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span>, world<span class="tsd-signature-symbol">: </span><a href="classes/world.html" class="tsd-signature-type">World</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> }</span></h4>
-							<ul class="tsd-parameters">
-								<li class="tsd-parameter">
-									<h5>filter<span class="tsd-signature-symbol">: </span><a href="globals.html#filter" class="tsd-signature-type">Filter</a><span class="tsd-signature-symbol">[]</span></h5>
-								</li>
-								<li class="tsd-parameter">
-									<h5>tick<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>entities<span class="tsd-signature-symbol">: </span><a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span>, world<span class="tsd-signature-symbol">: </span><a href="classes/world.html" class="tsd-signature-type">World</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-signature">
-											<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-variable">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>entities<span class="tsd-signature-symbol">: </span><a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span>, world<span class="tsd-signature-symbol">: </span><a href="classes/world.html" class="tsd-signature-type">World</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>entities: <a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span></h5>
-														</li>
-														<li>
-															<h5>world: <a href="classes/world.html" class="tsd-signature-type">World</a></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">LogicSystem</span></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="rendersystem" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> render<wbr>System</h3>
+					<h3>render<wbr>System</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">render<wbr>System<span class="tsd-signature-symbol">(</span>filter<span class="tsd-signature-symbol">: </span><a href="globals.html#filter" class="tsd-signature-type">Filter</a><span class="tsd-signature-symbol">[]</span>, tick<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>entities<span class="tsd-signature-symbol">: </span><a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span>, lag<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, world<span class="tsd-signature-symbol">: </span><a href="classes/world.html" class="tsd-signature-type">World</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>filter<span class="tsd-signature-symbol">: </span><a href="globals.html#filter" class="tsd-signature-type">Filter</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>tick<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>entities<span class="tsd-signature-symbol">: </span><a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span>, lag<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, world<span class="tsd-signature-symbol">: </span><a href="classes/world.html" class="tsd-signature-type">World</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> }</span></li>
+						<li class="tsd-signature tsd-kind-icon">render<wbr>System<span class="tsd-signature-symbol">(</span>filter<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Filters</span>, tick<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>entities<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">filter</span><span class="tsd-signature-symbol">, </span><a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span>, lag<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, world<span class="tsd-signature-symbol">: </span><a href="classes/world.html" class="tsd-signature-type">World</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RenderSystem</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/d92b76b/src/render-system.ts#L38">render-system.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/7c31fde/src/render-system.ts#L32">render-system.ts:32</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -254,9 +225,9 @@
 									This can be used to compensate for the time your logic systems has spent during
 								a frame.</p>
 								<pre><code>const renderSystem = renderSystem(
-    [Renderable],
-    (<span class="hljs-name">entities</span>: Entity[], lag: number, world: World) {
-        entities.forEach(<span class="hljs-name">entity</span> =&gt; {
+    { renderable: [Renderable] },
+    (<span class="hljs-name">entities</span>: Record&lt;string, Entity[]&gt;, lag: number, world: World) {
+        entities.renderable.forEach(<span class="hljs-name">entity</span> =&gt; {
             console.log(<span class="hljs-name">entity</span>.has(<span class="hljs-name">Renderable</span>))<span class="hljs-comment">; // -&gt; true</span>
         })
     }
@@ -265,21 +236,21 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>filter: <a href="globals.html#filter" class="tsd-signature-type">Filter</a><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>filter: <span class="tsd-signature-type">Filters</span></h5>
 								</li>
 								<li>
-									<h5>tick: <span class="tsd-signature-symbol">(</span>entities<span class="tsd-signature-symbol">: </span><a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span>, lag<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, world<span class="tsd-signature-symbol">: </span><a href="classes/world.html" class="tsd-signature-type">World</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
+									<h5>tick: <span class="tsd-signature-symbol">(</span>entities<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">filter</span><span class="tsd-signature-symbol">, </span><a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span>, lag<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, world<span class="tsd-signature-symbol">: </span><a href="classes/world.html" class="tsd-signature-type">World</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>entities<span class="tsd-signature-symbol">: </span><a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span>, lag<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, world<span class="tsd-signature-symbol">: </span><a href="classes/world.html" class="tsd-signature-type">World</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>entities<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">filter</span><span class="tsd-signature-symbol">, </span><a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span>, lag<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, world<span class="tsd-signature-symbol">: </span><a href="classes/world.html" class="tsd-signature-type">World</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
 													<h4 class="tsd-parameters-title">Parameters</h4>
 													<ul class="tsd-parameters">
 														<li>
-															<h5>entities: <a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span></h5>
+															<h5>entities: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">filter</span><span class="tsd-signature-symbol">, </span><a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h5>
 														</li>
 														<li>
 															<h5>lag: <span class="tsd-signature-type">number</span></h5>
@@ -295,39 +266,7 @@
 									</ul>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>filter<span class="tsd-signature-symbol">: </span><a href="globals.html#filter" class="tsd-signature-type">Filter</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>tick<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>entities<span class="tsd-signature-symbol">: </span><a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span>, lag<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, world<span class="tsd-signature-symbol">: </span><a href="classes/world.html" class="tsd-signature-type">World</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> }</span></h4>
-							<ul class="tsd-parameters">
-								<li class="tsd-parameter">
-									<h5>filter<span class="tsd-signature-symbol">: </span><a href="globals.html#filter" class="tsd-signature-type">Filter</a><span class="tsd-signature-symbol">[]</span></h5>
-								</li>
-								<li class="tsd-parameter">
-									<h5>tick<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>entities<span class="tsd-signature-symbol">: </span><a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span>, lag<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, world<span class="tsd-signature-symbol">: </span><a href="classes/world.html" class="tsd-signature-type">World</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-signature">
-											<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-variable">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>entities<span class="tsd-signature-symbol">: </span><a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span>, lag<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, world<span class="tsd-signature-symbol">: </span><a href="classes/world.html" class="tsd-signature-type">World</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>entities: <a href="classes/entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span></h5>
-														</li>
-														<li>
-															<h5>lag: <span class="tsd-signature-type">number</span></h5>
-														</li>
-														<li>
-															<h5>world: <a href="classes/world.html" class="tsd-signature-type">World</a></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">RenderSystem</span></h4>
 						</li>
 					</ul>
 				</section>

@@ -90,7 +90,13 @@ export default class World {
         while (this.renderState.lag >= this.renderState.frameDuration) {
             count += 1;
             this.logicSystems.forEach((system) => {
-                const entities = Array.from(this.entities.get(system.filter).values());
+                const entities = Object.entries(system.filter).reduce((acc, cur) => {
+                    const key = cur[0];
+                    const filters = cur[1];
+                    const entities = Array.from(this.entities.get(filters).values());
+                    acc[key] = entities;
+                    return acc;
+                }, {});
                 return system.tick(entities, this);
             });
             this.renderState.lag -= this.renderState.frameDuration;
@@ -98,7 +104,13 @@ export default class World {
         log(this.debug, "Update ran", count, "times");
         const lagOffset = this.renderState.lag / this.renderState.frameDuration;
         this.renderSystems.forEach((system) => {
-            const entities = Array.from(this.entities.get(system.filter).values());
+            const entities = Object.entries(system.filter).reduce((acc, cur) => {
+                const key = cur[0];
+                const filters = cur[1];
+                const entities = Array.from(this.entities.get(filters).values());
+                acc[key] = entities;
+                return acc;
+            }, {});
             return system.tick(entities, lagOffset, this);
         });
         this.renderState.previous = timestamp;
@@ -107,17 +119,21 @@ export default class World {
     createEntityMapping(entities) {
         this.logicSystems.forEach((system) => {
             const entityMap = new Map();
-            filterEntities(entities, system.filter).forEach((entity) => {
-                entityMap.set(entity.id, entity);
+            Object.entries(system.filter).forEach(([key, filter]) => {
+                filterEntities(entities, filter).forEach((entity) => {
+                    entityMap.set(entity.id, entity);
+                });
+                this.entities.set(filter, entityMap);
             });
-            this.entities.set(system.filter, entityMap);
         });
         this.renderSystems.forEach((system) => {
             const entityMap = new Map();
-            filterEntities(entities, system.filter).forEach((entity) => {
-                entityMap.set(entity.id, entity);
+            Object.entries(system.filter).forEach(([key, filter]) => {
+                filterEntities(entities, filter).forEach((entity) => {
+                    entityMap.set(entity.id, entity);
+                });
+                this.entities.set(filter, entityMap);
             });
-            this.entities.set(system.filter, entityMap);
         });
     }
     createMouseListener() {

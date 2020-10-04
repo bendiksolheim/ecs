@@ -10,19 +10,19 @@
  * a frame.
  * ```
  * const renderSystem = renderSystem(
- *     [Renderable],
- *     (entities: Entity[], lag: number, world: World) {
- *         entities.forEach(entity => {
+ *     { renderable: [Renderable] },
+ *     (entities: Record<string, Entity[]>, lag: number, world: World) {
+ *         entities.renderable.forEach(entity => {
  *             console.log(entity.has(Renderable)); // -> true
  *         })
  *     }
  * )
  * ```
  */
-const renderSystem = (filter, tick) => {
+function renderSystem(filter, tick) {
     return {
         filter,
         tick,
     };
-};
+}
 export default renderSystem;

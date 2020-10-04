@@ -7,9 +7,9 @@
  *
  * ```
  * const logicSystem = logicystem(
- *     [ComponentOne, ComponentTwo],
- *     (entities: Entity[], world: World) => {
- *         entities.forEach(entity => {
+ *     { myEntities: [ComponentOne, ComponentTwo] },
+ *     (entities: Record<string, Entity[]>, world: World) => {
+ *         entities.myEntities.forEach(entity => {
  *             console.log(entity.has(ComponentOne)); // -> true
  *             console.log(entity.has(ComponentTwo)); // -> true
  *         });
@@ -17,10 +17,10 @@
  * );
  * ```
  */
-const logicSystem = (filter, tick) => {
+function logicSystem(filter, tick) {
     return {
         filter,
         tick,
     };
-};
+}
 export default logicSystem;
