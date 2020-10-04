@@ -4,6 +4,7 @@ import { LogicSystem } from "./logic-system";
 import { RenderSystem } from "./render-system";
 import Keyboard, { Key } from "./keyboard";
 import { makeEntities } from "./make-entities";
+import MouseClick from "./events/mouse-click";
 
 const defaultRenderConfig = {
   fps: 60,
@@ -211,6 +212,12 @@ export default class World {
 
     this.canvas.addEventListener("mouseup", () => {
       this.mouse.pressed = false;
+    });
+
+    this.canvas.addEventListener("click", () => {
+      const e = new Entity();
+      e.add(new MouseClick(this.mouse.x, this.mouse.y));
+      this.addEntity(e);
     });
   }
 
