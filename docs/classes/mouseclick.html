@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Keyboard | ecs</title>
+	<title>MouseClick | ecs</title>
 	<meta name="description" content="Documentation for ecs">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="keyboard.html">Keyboard</a>
+					<a href="mouseclick.html">MouseClick</a>
 				</li>
 			</ul>
-			<h1>Class Keyboard</h1>
+			<h1>Class MouseClick</h1>
 		</div>
 	</div>
 </header>
@@ -69,20 +69,22 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Keeps track of keyboard state, and can be asked for pressed keys
-						Intended to be accessed through a World instance:</p>
+						<p>A component used to store mouse coordinates in case of mouse click</p>
 					</div>
-					<pre><code><span class="hljs-function"><span class="hljs-title">if</span> <span class="hljs-params">(world.keyboard.pressed(Key.Up))</span> {
-  <span class="hljs-title">console</span>.<span class="hljs-title">log</span><span class="hljs-params">(<span class="hljs-string">&quot;Arrow up pressed&quot;</span>)</span>
-}</span></code></pre>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Keyboard</span>
+						<span class="target">MouseClick</span>
 					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../interfaces/component.html" class="tsd-signature-type">Component</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -90,44 +92,46 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Methods</h3>
+							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="keyboard.html#pressed" class="tsd-kind-icon">pressed</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="mouseclick.html#x" class="tsd-kind-icon">x</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="mouseclick.html#y" class="tsd-kind-icon">y</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="pressed" class="tsd-anchor"></a>
-					<h3>pressed</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">pressed<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="../enums/key.html" class="tsd-signature-type">Key</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/f5bbae5/src/keyboard.ts#L103">keyboard.ts:103</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>key: <a href="../enums/key.html" class="tsd-signature-type">Key</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>A key to query for state</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-							<p>true | false depending on if key is pressed</p>
-						</li>
-					</ul>
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="x" class="tsd-anchor"></a>
+					<h3>x</h3>
+					<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/f5bbae5/src/events/mouse-click.ts#L11">events/mouse-click.ts:11</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Mouse X coordinate</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="y" class="tsd-anchor"></a>
+					<h3>y</h3>
+					<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/f5bbae5/src/events/mouse-click.ts#L15">events/mouse-click.ts:15</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Mouse Y coordinate</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -150,21 +154,24 @@
 					<li class=" tsd-kind-class">
 						<a href="entity.html" class="tsd-kind-icon">Entity</a>
 					</li>
+					<li class=" tsd-kind-class">
+						<a href="keyboard.html" class="tsd-kind-icon">Keyboard</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="keyboard.html" class="tsd-kind-icon">Keyboard</a>
+						<a href="mouseclick.html" class="tsd-kind-icon">Mouse<wbr>Click</a>
 						<ul>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="keyboard.html#pressed" class="tsd-kind-icon">pressed</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="mouseclick.html#x" class="tsd-kind-icon">x</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="mouseclick.html#y" class="tsd-kind-icon">y</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class">
-						<a href="mouseclick.html" class="tsd-kind-icon">Mouse<wbr>Click</a>
-					</li>
 					<li class=" tsd-kind-class">
 						<a href="pixientity.html" class="tsd-kind-icon">Pixi<wbr>Entity</a>
 					</li>
