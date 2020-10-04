@@ -171,9 +171,12 @@ export default class World {
   }
 
   createEntityMapping(entities: Record<string, Entity>) {
+    log(this.debug, "Mapping logic systems");
     this.logicSystems.forEach((system) => {
-      const entityMap = new Map();
+      log(this.debug, "Creating mapping for system");
       Object.entries(system.filter).forEach(([key, filter]) => {
+        log(this.debug, `Mapping for ${key}`);
+        const entityMap = new Map();
         filterEntities(entities, filter).forEach((entity) => {
           entityMap.set(entity.id, entity);
         });
@@ -181,9 +184,12 @@ export default class World {
       });
     });
 
+    log(this.debug, "Mapping render systems");
     this.renderSystems.forEach((system) => {
-      const entityMap = new Map();
+      log(this.debug, "Creating mapping for system");
       Object.entries(system.filter).forEach(([key, filter]) => {
+        log(this.debug, `Mapping for ${key}`);
+        const entityMap = new Map();
         filterEntities(entities, filter).forEach((entity) => {
           entityMap.set(entity.id, entity);
         });
