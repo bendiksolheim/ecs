@@ -11,7 +11,7 @@
     "preversion": "tsc",
     "version": "npm run clean && npm run build && npm run docs && git add --all dist && git add --all docs",
     "postversion": "git push && git push --tags",
-    "typecheck": "tsc --watch"
+    "typecheck": "tsc --noEmit --watch"
   },
   "keywords": [],
   "author": "",
