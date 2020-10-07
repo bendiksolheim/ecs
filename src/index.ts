@@ -10,6 +10,7 @@ import Rotation from "./pixi/rotation";
 import Position from "./pixi/position";
 import Size from "./pixi/size";
 import MouseClick from "./events/mouse-click";
+import Pivot from "./pixi/pivot";
 
 export {
   Component,
@@ -22,6 +23,7 @@ export {
   Displayable,
   Position,
   Rotation,
+  Pivot,
   Size,
   MouseClick,
 };
