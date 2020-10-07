@@ -9,4 +9,5 @@ import Rotation from "./pixi/rotation";
 import Position from "./pixi/position";
 import Size from "./pixi/size";
 import MouseClick from "./events/mouse-click";
-export { Entity, logicSystem, renderSystem, World, Key, PixiEntity, Displayable, Position, Rotation, Size, MouseClick, };
+import Pivot from "./pixi/pivot";
+export { Entity, logicSystem, renderSystem, World, Key, PixiEntity, Displayable, Position, Rotation, Pivot, Size, MouseClick, };
