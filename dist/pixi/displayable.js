@@ -1,5 +1,5 @@
 /**
- * Holds a PIXI.DisplayObject instance
+ * Holds a PIXI.Container instance
  */
 class Displayable {
     /**
