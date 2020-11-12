@@ -2,17 +2,17 @@ import Component from "../component";
 import * as PIXI from "pixi.js";
 
 /**
- * Holds a PIXI.DisplayObject instance
+ * Holds a PIXI.Container instance
  */
 class Displayable implements Component {
   name = "displayable";
   /**
    */
-  ref: PIXI.DisplayObject;
+  ref: PIXI.Container;
 
   /**
    */
-  constructor(ref: PIXI.DisplayObject) {
+  constructor(ref: PIXI.Container) {
     this.ref = ref;
   }
 }
