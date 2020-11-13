@@ -1,3 +1,4 @@
+import * as PIXI from "pixi.js";
 import Component from "./component";
 import Entity from "./entity";
 import { LogicSystem } from "./logic-system";
@@ -5,6 +6,7 @@ import { RenderSystem } from "./render-system";
 import Keyboard, { Key } from "./keyboard";
 import { makeEntities } from "./make-entities";
 import MouseClick from "./events/mouse-click";
+import debugEntities from "./debug/debug-entities";
 
 const defaultRenderConfig = {
   fps: 60,
@@ -39,8 +41,7 @@ type Filter = Array<new (...args: any) => Component>;
  *
  */
 export default class World {
-  canvas: HTMLCanvasElement;
-  context: CanvasRenderingContext2D;
+  pixi: PIXI.Application;
   logicSystems: LogicSystem[];
   renderSystems: RenderSystem[];
   entities: Map<Filter, Map<string, Entity>>;
@@ -59,16 +60,21 @@ export default class World {
    * Main constructor
    */
   constructor(
-    canvas: HTMLCanvasElement,
+    pixi: PIXI.Application,
     entities: Entity[],
     logicSystems: LogicSystem[],
     renderSystems: RenderSystem[],
     renderConfig: RenderConfig = defaultRenderConfig
   ) {
-    this.canvas = canvas;
-    this.context = canvas.getContext("2d")!;
+    this.debug = renderConfig.debug;
+    this.pixi = pixi;
     this.mouse = { x: -100, y: -100, pressed: false };
-    this.logicSystems = logicSystems;
+    if (this.debug) {
+      pixi.stage.addChild(debugContainer());
+      this.logicSystems = logicSystems.concat(debugEntities);
+    } else {
+      this.logicSystems = logicSystems;
+    }
     this.renderSystems = renderSystems;
     this.entities = new Map();
     this.keyboard = new Keyboard();
@@ -79,7 +85,6 @@ export default class World {
       frameDuration: 1000 / renderConfig.fps,
       lag: 0,
     };
-    this.debug = renderConfig.debug;
 
     entities.forEach((entity) => {
       entity.register(this);
@@ -105,9 +110,9 @@ export default class World {
   /**
    * Removes an entity from an already instantiated world.
    */
-  removeEntity(id: string) {
+  removeEntity(entity: Entity) {
     this.entities.forEach((value) => {
-      value.delete(id);
+      value.delete(entity.id);
     });
   }
 
@@ -125,7 +130,6 @@ export default class World {
     }
     // Calculate time since last frame
     let elapsed = timestamp - this.renderState.previous;
-    log(this.debug, "Elapsed", elapsed);
 
     // Handle case where time since last frame is unreasonably high
     if (elapsed > 1000) {
@@ -135,7 +139,6 @@ export default class World {
     // Add elapsed time to lag counter
     this.renderState.lag += elapsed;
 
-    log(this.debug, "Frame", this.renderState);
     let count = 0;
     while (this.renderState.lag >= this.renderState.frameDuration) {
       count += 1;
@@ -152,7 +155,6 @@ export default class World {
 
       this.renderState.lag -= this.renderState.frameDuration;
     }
-    log(this.debug, "Update ran", count, "times");
 
     const lagOffset = this.renderState.lag / this.renderState.frameDuration;
 
@@ -200,21 +202,21 @@ export default class World {
   }
 
   createMouseListener() {
-    const canvasRect = this.canvas.getBoundingClientRect();
-    this.canvas.addEventListener("mousemove", (ev) => {
+    const canvasRect = this.pixi.view.getBoundingClientRect();
+    this.pixi.view.addEventListener("mousemove", (ev) => {
       this.mouse.x = ev.clientX - canvasRect.left;
       this.mouse.y = ev.clientY - canvasRect.top;
     });
 
-    this.canvas.addEventListener("mousedown", () => {
+    this.pixi.view.addEventListener("mousedown", () => {
       this.mouse.pressed = true;
     });
 
-    this.canvas.addEventListener("mouseup", () => {
+    this.pixi.view.addEventListener("mouseup", () => {
       this.mouse.pressed = false;
     });
 
-    this.canvas.addEventListener("click", () => {
+    this.pixi.view.addEventListener("click", () => {
       const e = new Entity();
       e.add(new MouseClick(this.mouse.x, this.mouse.y));
       this.addEntity(e);
@@ -258,4 +260,11 @@ function log(debug: Boolean, ...msg: any[]) {
     });
     console.log.call(null, messages);
   }
+}
+
+function debugContainer(): PIXI.Container {
+  const container = new PIXI.Container();
+  container.name = "debug-container";
+  container.zIndex = Number.MAX_SAFE_INTEGER;
+  return container;
 }

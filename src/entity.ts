@@ -29,7 +29,7 @@ export default class Entity {
     const i = component.constructor as new (...args: any) => Component;
     this.components.set(i, component);
     if (this.world) {
-      this.world.removeEntity(this.id);
+      this.world.removeEntity(this);
       this.world.addEntity(this);
     }
   }
@@ -40,7 +40,7 @@ export default class Entity {
   remove(component: new (...args: any) => Component) {
     this.components.delete(component);
     if (this.world) {
-      this.world.removeEntity(this.id);
+      this.world.removeEntity(this);
       this.world.addEntity(this);
     }
   }
