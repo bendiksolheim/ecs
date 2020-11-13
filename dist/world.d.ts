@@ -1,3 +1,4 @@
+import * as PIXI from "pixi.js";
 import Component from "./component";
 import Entity from "./entity";
 import { LogicSystem } from "./logic-system";
@@ -32,8 +33,7 @@ declare type Filter = Array<new (...args: any) => Component>;
  *
  */
 export default class World {
-    canvas: HTMLCanvasElement;
-    context: CanvasRenderingContext2D;
+    pixi: PIXI.Application;
     logicSystems: LogicSystem[];
     renderSystems: RenderSystem[];
     entities: Map<Filter, Map<string, Entity>>;
@@ -54,7 +54,7 @@ export default class World {
     /**
      * Main constructor
      */
-    constructor(canvas: HTMLCanvasElement, entities: Entity[], logicSystems: LogicSystem[], renderSystems: RenderSystem[], renderConfig?: RenderConfig);
+    constructor(pixi: PIXI.Application, entities: Entity[], logicSystems: LogicSystem[], renderSystems: RenderSystem[], renderConfig?: RenderConfig);
     /**
      * Adds an entity to an already instantiated world. Updates system filters.
      */
@@ -62,7 +62,7 @@ export default class World {
     /**
      * Removes an entity from an already instantiated world.
      */
-    removeEntity(id: string): void;
+    removeEntity(entity: Entity): void;
     /**
      * Starts the game loop. Runs until stopped.
      */

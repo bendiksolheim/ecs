@@ -124,13 +124,13 @@ world.start<span class="hljs-literal">()</span></code></pre>
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>World<span class="tsd-signature-symbol">(</span>canvas<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HTMLCanvasElement</span>, entities<span class="tsd-signature-symbol">: </span><a href="entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span>, logicSystems<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">LogicSystem</span><span class="tsd-signature-symbol">[]</span>, renderSystems<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RenderSystem</span><span class="tsd-signature-symbol">[]</span>, renderConfig<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">RenderConfig</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="world.html" class="tsd-signature-type">World</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>World<span class="tsd-signature-symbol">(</span>pixi<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Application</span>, entities<span class="tsd-signature-symbol">: </span><a href="entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span>, logicSystems<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">LogicSystem</span><span class="tsd-signature-symbol">[]</span>, renderSystems<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RenderSystem</span><span class="tsd-signature-symbol">[]</span>, renderConfig<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">RenderConfig</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="world.html" class="tsd-signature-type">World</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/4ae9edf/src/world.ts#L56">world.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/9fe4028/src/world.ts#L57">world.ts:57</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -141,7 +141,7 @@ world.start<span class="hljs-literal">()</span></code></pre>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>canvas: <span class="tsd-signature-type">HTMLCanvasElement</span></h5>
+									<h5>pixi: <span class="tsd-signature-type">Application</span></h5>
 								</li>
 								<li>
 									<h5>entities: <a href="entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span></h5>
@@ -169,7 +169,7 @@ world.start<span class="hljs-literal">()</span></code></pre>
 					<div class="tsd-signature tsd-kind-icon">keyboard<span class="tsd-signature-symbol">:</span> <a href="keyboard.html" class="tsd-signature-type">Keyboard</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/4ae9edf/src/world.ts#L56">world.ts:56</a></li>
+							<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/9fe4028/src/world.ts#L57">world.ts:57</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -184,7 +184,7 @@ world.start<span class="hljs-literal">()</span></code></pre>
 					<div class="tsd-signature tsd-kind-icon">mouse<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>pressed<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>x<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>y<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/4ae9edf/src/world.ts#L52">world.ts:52</a></li>
+							<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/9fe4028/src/world.ts#L53">world.ts:53</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -220,7 +220,7 @@ world.start<span class="hljs-literal">()</span></code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/4ae9edf/src/world.ts#L96">world.ts:96</a></li>
+									<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/9fe4028/src/world.ts#L101">world.ts:101</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -242,13 +242,13 @@ world.start<span class="hljs-literal">()</span></code></pre>
 					<a name="removeentity" class="tsd-anchor"></a>
 					<h3>remove<wbr>Entity</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">remove<wbr>Entity<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Entity<span class="tsd-signature-symbol">(</span>entity<span class="tsd-signature-symbol">: </span><a href="entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/4ae9edf/src/world.ts#L108">world.ts:108</a></li>
+									<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/9fe4028/src/world.ts#L113">world.ts:113</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -259,7 +259,7 @@ world.start<span class="hljs-literal">()</span></code></pre>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>id: <span class="tsd-signature-type">string</span></h5>
+									<h5>entity: <a href="entity.html" class="tsd-signature-type">Entity</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -276,7 +276,7 @@ world.start<span class="hljs-literal">()</span></code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/4ae9edf/src/world.ts#L117">world.ts:117</a></li>
+									<li>Defined in <a href="https://github.com/bendiksolheim/ecs/blob/9fe4028/src/world.ts#L122">world.ts:122</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
