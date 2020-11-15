@@ -8,6 +8,7 @@
     "clean": "rm -r dist",
     "docs": "typedoc --mode file --excludeNotDocumented",
     "build": "rollup -c && tsc",
+    "watch": "rollup -c -w",
     "preversion": "tsc",
     "version": "npm run clean && npm run build && npm run docs && git add --all dist && git add --all docs",
     "postversion": "git push && git push --tags",
