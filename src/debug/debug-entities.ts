@@ -19,39 +19,39 @@ export default logicSystem(
         (d) => d.get(Debug).entityId === debugged.id
       );
       if (debug) {
-        const bounds = debugged.get(Displayable).ref.getBounds();
-        const ref = debug.get(Displayable).ref;
-        ref.x = bounds.x;
-        ref.y = bounds.y;
-        ref.width = bounds.width;
-        ref.height = bounds.height;
-        // const pos = debug.get(Position);
-        // const rot = debug.get(Rotation);
-        // const siz = debug.get(Size);
-        // debugged.ifHas(Position, (position) => {
-        //   pos.x = position.x;
-        //   pos.y = position.y;
-        // });
-        // debugged.ifHas(Rotation, (rotation) => {
-        //   rot.angle = rotation.angle;
-        // });
-        // debugged.ifHas(Size, (size) => {
-        //   siz.width = size.width;
-        //   siz.height = size.height;
-        // });
-      } else {
+        const debuggedRef = debugged.get(Displayable).ref;
+        const bounds = debuggedRef.getBounds();
+        const ref = debug.get(Displayable).ref as PIXI.Graphics;
+        ref.clear();
+        ref.lineStyle(1, 0xff0000, 1, 0);
+        ref.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
+        ref.visible = isVisible(debuggedRef);
+      } else if (debugged.get(Displayable).ref.children.length === 0) {
         const bounds = debugged.get(Displayable).ref.getBounds();
         const g = new PIXI.Graphics();
+        g.name = `${debugged.get(Displayable).ref.name}-debug`;
         g.lineStyle(1, 0xff0000, 1, 0);
         g.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
         const entity = new PixiEntity();
+        entity.add(new Debug(debugged.id));
         entity.addDisplayObject(
           g,
           world.pixi.stage.getChildByName("debug-container") as PIXI.Container
         );
-        entity.add(new Debug(debugged.id));
         world.addEntity(entity);
       }
     });
   }
 );
+
+function isVisible(ref: PIXI.Container): boolean {
+  let cur = ref;
+  do {
+    if (!cur.visible) {
+      return false;
+    }
+    cur = cur.parent;
+  } while (cur !== null);
+
+  return true;
+}

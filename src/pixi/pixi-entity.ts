@@ -7,6 +7,7 @@ import Rotation from "./rotation";
 import Size from "./size";
 import Pivot from "./pivot";
 import Debugged from "../debug/debugged";
+import Debug from "../debug/debug";
 
 /**
  * A special entity which automatically adds the components Position,
@@ -27,7 +28,9 @@ class PixiEntity extends Entity {
     this.add(new Rotation(obj.rotation));
     this.add(new Size(obj.width, obj.height));
     this.add(new Pivot(obj.pivot.x, obj.pivot.y));
-    this.add(new Debugged());
+    if (!this.get(Debug)) {
+      this.add(new Debugged());
+    }
   }
 }
 
