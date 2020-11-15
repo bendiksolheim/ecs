@@ -1,6 +1,6 @@
 {
   "name": "ecs",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Simple entity component system written in Typescript, specially written to work well with Pixi.js as renderer.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
