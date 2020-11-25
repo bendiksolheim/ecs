@@ -51,6 +51,7 @@ export default class World {
      * Contains current keyboard state, with keys pressed and so on
      */
     keyboard: Keyboard;
+    elapsedTime: number;
     /**
      * Main constructor
      */
@@ -68,6 +69,10 @@ export default class World {
      */
     start(): void;
     tick(timestamp?: number): void;
+    /**
+     * Gets time elapsed since engine was started
+     */
+    currentElapsedTime(): number;
     createEntityMapping(entities: Record<string, Entity>): void;
     createMouseListener(): void;
     createKeyboardListener(): void;

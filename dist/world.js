@@ -42,6 +42,7 @@ export default class World {
         this.renderSystems = renderSystems;
         this.entities = new Map();
         this.keyboard = new Keyboard();
+        this.elapsedTime = 0;
         this.renderState = {
             fps: renderConfig.fps,
             previous: 0,
@@ -78,6 +79,7 @@ export default class World {
      * Starts the game loop. Runs until stopped.
      */
     start() {
+        this.elapsedTime = performance.now();
         log(this.debug, "Starting rendering", this.renderState);
         this.tick();
     }
@@ -121,6 +123,12 @@ export default class World {
         });
         this.renderState.previous = timestamp;
         requestAnimationFrame((n) => this.tick(n));
+    }
+    /**
+     * Gets time elapsed since engine was started
+     */
+    currentElapsedTime() {
+        return performance.now() - this.elapsedTime;
     }
     createEntityMapping(entities) {
         log(this.debug, "Mapping logic systems");
